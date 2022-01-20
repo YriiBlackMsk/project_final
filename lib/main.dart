@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'core/store.dart';
 import 'screens/splash_screen.dart';
 
 void main() async {
@@ -15,9 +16,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: StateBinding(),
+      debugShowCheckedModeBanner: false,
       title: 'Project Final',
       theme: ThemeData.light(),
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
+  }
+}
+
+class StateBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => Store());
   }
 }

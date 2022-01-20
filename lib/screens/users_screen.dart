@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-import '../utilities/constants.dart';
+import '../core/constants.dart';
+import '../core/store.dart';
 
-class UsersScreen extends StatefulWidget {
-  const UsersScreen({Key? key}) : super(key: key);
+class UsersScreen extends StatelessWidget {
+  UsersScreen({Key? key}) : super(key: key);
 
-  @override
-  _UsersScreenState createState() => _UsersScreenState();
-}
-
-class _UsersScreenState extends State<UsersScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final Store _state = Get.put(Store());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(() => Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
         leading: Hero(
@@ -28,13 +22,13 @@ class _UsersScreenState extends State<UsersScreen> {
             padding: EdgeInsets.all(kDefaultPadding / 2),
           ),
         ),
-        title: Text('PF'),
+        title: Text('${_state.user.value['name']}'),
       ),
-      body: const Expanded(
+      body: SafeArea(
         child: Center(
-          child: Text('PF'),
+          child: Text('${_state.user.value}'),
         ),
       ),
-    );
+    ));
   }
 }
