@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:project_fin/core/networking.dart';
 
@@ -8,24 +7,18 @@ class Store extends GetxController {
   final password = ''.obs;
   final token = ''.obs;
   dynamic user = {}.obs;
-  final counter = 0.obs;
+  dynamic users = [].obs;
 
-  late final Networking _api;
+  late final Networking api;
 
   @override
   void onInit() {
     super.onInit();
-    _api = Get.put(Networking());
+    api = Get.put(Networking());
   }
 
-  void increment() {
-    counter.value++;
-    log('counter: ${counter.value}');
-    update();
-  }
-
-  Future<void> loginUser(String inputEmail, String inputPassword) async {
-    var res = await _api.getLogin(inputEmail, inputPassword);
+  Future<void> getLogin(String inputEmail, String inputPassword) async {
+    var res = await api.getLogin(inputEmail, inputPassword);
     if (res != null) {
       email.value = inputEmail;
       password.value = inputPassword;
@@ -33,6 +26,13 @@ class Store extends GetxController {
       user.value = res['result'];
     } else {
       token.value = '';
+    }
+  }
+
+  Future<void> getUsers() async {
+    var res = await api.getUsers();
+    if (res != null) {
+      users.value = res['result'];
     }
   }
 }

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding: StateBinding(),
+      initialBinding: StoreBinding(),
       debugShowCheckedModeBanner: false,
       title: 'Project Final',
       theme: ThemeData.light(),
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class StateBinding implements Bindings {
+class StoreBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => Store());

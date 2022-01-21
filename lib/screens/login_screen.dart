@@ -12,22 +12,15 @@ import 'users_screen.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
-  final Store _store = Get.find<Store>();
+  final Store store = Get.find<Store>();
   final gs = GetStorage();
-  final email = ''.obs;
-  final password = ''.obs;
   final TextEditingController emailInputController = TextEditingController();
   final showSpinner = false.obs;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   email = gs.read('email') ?? '';
-  //   setState(() => emailInputController.text = gs.read('email') ?? '');
-  // }
-
   @override
   Widget build(BuildContext context) {
+    store.email.value = gs.read('email') ?? '';
+    emailInputController.text = store.email.value;
     return Obx(
       () => Scaffold(
         backgroundColor: Colors.white,
@@ -56,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (value) {
-                            email.value = value;
+                            store.email.value = value;
                           },
                           decoration: kInputDecoration.copyWith(
                             hintText: 'Enter your email',
@@ -69,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                           obscureText: true,
                           onChanged: (value) {
-                            password.value = value;
+                            store.password.value = value;
                           },
                           decoration: kInputDecoration.copyWith(
                             hintText: 'Enter your password',
@@ -93,10 +86,10 @@ class LoginScreen extends StatelessWidget {
                           onPressed: () async {
                             showSpinner.value = true;
                             try {
-                              await _store.loginUser(email.value, password.value);
-                              await Future.delayed(const Duration(seconds: 3));
-                              if (_store.token.value.isNotEmpty) {
-                                gs.write('email', email);
+                              await store.getLogin(store.email.value, store.password.value);
+                              await Future.delayed(const Duration(seconds: 1));
+                              if (store.token.value.isNotEmpty) {
+                                gs.write('email', store.email.value);
                                 Get.to(() => UsersScreen());
                               } else {
                                 Get.defaultDialog(

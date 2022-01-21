@@ -9,7 +9,7 @@ import 'users_screen.dart';
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
 
-  final Store _store = Get.put(Store());
+  final Store store = Get.put(Store());
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,8 @@ class SplashScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(50.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_store.token.value.isNotEmpty) {
-                        Get.off(() => UsersScreen());
+                      if (store.token.value.isNotEmpty) {
+                        Get.off(() => const UsersScreen());
                       } else {
                         Get.off(() => LoginScreen());
                       }
