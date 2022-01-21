@@ -5,7 +5,7 @@ const double kDefaultPadding = 20;
 const kButtonTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 18.0,
-  //fontWeight: FontWeight.bold,
+  fontWeight: FontWeight.w500,
 );
 
 const kInputDecoration = InputDecoration(

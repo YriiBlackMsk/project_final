@@ -6,20 +6,21 @@ import '../core/constants.dart';
 import '../core/store.dart';
 import '../widgets/my_bottom_navigation_bar.dart';
 
-class UsersScreen extends StatefulWidget {
-  const UsersScreen({Key? key}) : super(key: key);
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  State<UsersScreen> createState() => _UsersScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _UsersScreenState extends State<UsersScreen> {
+class _ChatScreenState extends State<ChatScreen> {
   final Store store = Get.find<Store>();
+  //late int channelHistoryCount = 0;
 
   @override
   void initState() {
     super.initState();
-    store.getUsers();
+    //channelHistoryCount = await store.channelHistory.count();
   }
 
   @override
@@ -35,15 +36,15 @@ class _UsersScreenState extends State<UsersScreen> {
               padding: const EdgeInsets.all(kDefaultPadding / 2),
             ),
           ),
-          title: Text('${store.user.value['name']}'),
+          title: Text('Messages: ${store.messages.length}'),
         ),
         body: SafeArea(
           child: RefreshIndicator(
-            onRefresh: () async => store.getUsers(),
+            onRefresh: () async => {},
             child: ListView.builder(
-              itemCount: store.users.length,
+              itemCount: store.messages.length,
               itemBuilder: (context, index) {
-                var user = store.users[index];
+                var message = store.messages[index];
                 return GestureDetector(
                   onTap: () async {},
                   child: Container(
@@ -59,19 +60,9 @@ class _UsersScreenState extends State<UsersScreen> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${user['name']}',
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      '${user['email']}',
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                  ],
+                                child: Text(
+                                  '${message.toString()}',
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
@@ -9,7 +10,7 @@ class Networking extends GetConnect {
 
   @override
   void onInit() {
-    httpClient.baseUrl = 'http://projectfinal.aenar.biz/api';
+    httpClient.baseUrl = dotenv.env['BASE_URL'];
     httpClient.addAuthenticator((Request request) async {
       final response = await get('/login?email=$email&password=$password');
       if (response.statusCode == HttpStatus.ok) {
