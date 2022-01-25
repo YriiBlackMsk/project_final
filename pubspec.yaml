@@ -1,4 +1,4 @@
-name: project_fin
+name: project_final
 description: Destructive. Toxic. Final.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
@@ -14,7 +14,6 @@ dependencies:
   loading_overlay: ^0.3.0
   get: ^4.6.1
   get_storage: ^2.0.3
-  pubnub: ^4.1.0
   flutter_dotenv: ^5.0.2
 
 dev_dependencies:

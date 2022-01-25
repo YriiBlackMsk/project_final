@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../core/constants.dart';
 import '../core/store.dart';
-import '../widgets/my_bottom_navigation_bar.dart';
+import '../widgets/my_drawer.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({Key? key}) : super(key: key);
@@ -27,6 +27,7 @@ class _UsersScreenState extends State<UsersScreen> {
     return Obx(
       () => Scaffold(
         backgroundColor: Colors.white,
+        drawer: const MyDrawer(),
         appBar: AppBar(
           leading: Hero(
             tag: 'logo',
@@ -35,7 +36,10 @@ class _UsersScreenState extends State<UsersScreen> {
               padding: const EdgeInsets.all(kDefaultPadding / 2),
             ),
           ),
-          title: Text('${store.user.value['name']}'),
+          title: Text(
+            'Logged in as: ${store.user.value['name']}',
+            textAlign: TextAlign.start,
+          ),
         ),
         body: SafeArea(
           child: RefreshIndicator(
@@ -45,7 +49,9 @@ class _UsersScreenState extends State<UsersScreen> {
               itemBuilder: (context, index) {
                 var user = store.users[index];
                 return GestureDetector(
-                  onTap: () async {},
+                  onTap: () async {
+                    Get.toNamed('/events/${user['id']}');
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 15.0,
@@ -58,6 +64,11 @@ class _UsersScreenState extends State<UsersScreen> {
                         Expanded(
                           child: Row(
                             children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0, 0, kDefaultPadding, 0),
+                                child: Text('${user['id']}'),
+                              ),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +96,6 @@ class _UsersScreenState extends State<UsersScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: const MyBottomNavigationBar(),
       ),
     );
   }

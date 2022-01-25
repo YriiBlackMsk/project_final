@@ -1,9 +1,9 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:project_fin/core/networking.dart';
-import 'package:pubnub/pubnub.dart';
+
+import 'networking.dart';
 
 class Store extends GetxController {
+  dynamic events = [].obs;
   dynamic messages = [].obs;
   dynamic user = {}.obs;
   dynamic users = [].obs;
@@ -11,39 +11,12 @@ class Store extends GetxController {
   final password = ''.obs;
   final token = ''.obs;
   late final Networking api;
-  late final PubNub pubnub;
-  late final Subscription subscription;
-  late final Channel channel;
-  late final ChannelHistory channelHistory;
   static Store get to => Get.find();
 
   @override
   void onInit() async {
     super.onInit();
     api = Get.put(Networking());
-
-    pubnub = PubNub(
-      defaultKeyset: Keyset(
-        subscribeKey: '${dotenv.env['PUBNUB_SUBSCRIBE_KEY']}',
-        publishKey: dotenv.env['PUBNUB_PUBLISH_KEY'],
-        uuid: const UUID('project-final'),
-      ),
-    );
-
-    subscription = pubnub.subscribe(channels: {'test'});
-
-    subscription.messages.take(1).listen((envelope) async {
-      print('${envelope.uuid} sent a message: ${envelope.payload}');
-      await subscription.dispose();
-    });
-    await Future.delayed(Duration(seconds: 3));
-    await pubnub.publish('test', {'message': 'My message!'});
-    channel = pubnub.channel('test');
-    await channel.publish({'message': 'Another message'});
-    channelHistory = channel.messages();
-    var count = await channelHistory.count();
-    print('Messages on test channel: $count');
-    messages = channelHistory.messages;
   }
 
   Future<void> getLogin(String inputEmail, String inputPassword) async {
@@ -62,6 +35,13 @@ class Store extends GetxController {
     var res = await api.getUsers();
     if (res != null) {
       users.value = res['result'];
+    }
+  }
+
+  Future<void> getEvents(id) async {
+    var res = await api.getEvents(id);
+    if (res != null) {
+      events.value = res['result'];
     }
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:project_final/screens/events_screen.dart';
+import 'package:project_final/screens/users_screen.dart';
 
 import 'core/store.dart';
 import 'screens/splash_screen.dart';
@@ -24,6 +26,16 @@ class MyApp extends StatelessWidget {
       initialBinding: StoreBinding(),
       theme: ThemeData.light(),
       title: 'Project Final',
+      getPages: [
+        GetPage(
+          name: '/users/',
+          page: () => const UsersScreen(),
+        ),
+        GetPage(
+          name: '/events/:user',
+          page: () => const EventsScreen(),
+        ),
+      ],
     );
   }
 }

@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                               await Future.delayed(const Duration(seconds: 1));
                               if (store.token.value.isNotEmpty) {
                                 gs.write('email', store.email.value);
-                                Get.to(() => UsersScreen());
+                                Get.toNamed('/users/');
                               } else {
                                 Get.defaultDialog(
                                   middleText: 'Email or password in incorrect',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../screens/chat_screen.dart';
+import '../screens/events_screen.dart';
 import '../screens/users_screen.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
@@ -14,16 +14,12 @@ class MyBottomNavigationBar extends StatefulWidget {
 }
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
-      if (index == 0) {
-        Get.to(() => const UsersScreen());
-      } else if (index == 1) {
-        Get.to(() => const ChatScreen());
-      }
+      _selectedIndex = 0;
+      Get.back();
     });
   }
 
@@ -36,8 +32,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           label: 'Users',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.messenger),
-          label: 'Chat',
+          icon: Icon(Icons.list),
+          label: 'Todos',
         ),
       ],
       selectedItemColor: Colors.blueAccent,

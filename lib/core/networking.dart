@@ -23,7 +23,7 @@ class Networking extends GetConnect {
 
   Future<dynamic> getLogin(email, password) async {
     final response = await get('/login?email=$email&password=$password');
-    log('res: ${response.body}');
+    log('/login?email=$email&password=$password: ${response.body}');
     if (response.statusCode == HttpStatus.ok) {
       email;
       password;
@@ -38,7 +38,13 @@ class Networking extends GetConnect {
 
   Future<dynamic> getUsers() async {
     final response = await get('/users');
-    log('res: ${response.body}');
+    log('/users: ${response.body}');
+    return (response.statusCode == HttpStatus.ok) ? response.body : null;
+  }
+
+  Future<dynamic> getEvents(id) async {
+    final response = await get('/events?page=1&size=20&userId=$id');
+    log('/events?page=1&size=20&userId=$id: ${response.body}');
     return (response.statusCode == HttpStatus.ok) ? response.body : null;
   }
 }
