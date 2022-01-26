@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
     store.email.value = gs.read('email') ?? '';
     emailInputController.text = store.email.value;
     // TODO: hardcoded password for development
-    passwordInputController.text = store.password.value = 'user1';
+    //passwordInputController.text = store.password.value = 'user1';
     return Scaffold(
       backgroundColor: Colors.white,
       body: Obx(() => LoadingOverlay(

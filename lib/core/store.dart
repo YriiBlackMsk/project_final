@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:project_final/models/event_model.dart';
 import 'package:project_final/models/user_model.dart';
