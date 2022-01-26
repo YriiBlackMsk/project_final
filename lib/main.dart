@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:project_final/screens/events_screen.dart';
-import 'package:project_final/screens/users_screen.dart';
 
 import 'core/store.dart';
+import 'screens/events_screen.dart';
 import 'screens/splash_screen.dart';
+import 'screens/users_screen.dart';
 
 void main() async {
   await GetStorage.init();

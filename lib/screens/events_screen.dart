@@ -16,14 +16,14 @@ class EventsScreen extends StatefulWidget {
 
 class _EventsScreenState extends State<EventsScreen> {
   final Store store = Get.find<Store>();
-  late dynamic user = {};
+  dynamic user = {};
 
   @override
   void initState() {
     super.initState();
     var _userId = Get.parameters['user'];
     for (final _user in store.users) {
-      if (_user['id'].toString() == _userId) {
+      if (_user.id.toString() == _userId) {
         setState(() {
           user = _user;
         });
@@ -34,89 +34,88 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        backgroundColor: Colors.white,
-        drawer: const MyDrawer(),
-        appBar: AppBar(
-          leading: Hero(
-            tag: 'logo',
-            child: Padding(
-              child: SvgPicture.asset('assets/images/witch-cat.svg'),
-              padding: const EdgeInsets.all(kDefaultPadding / 2),
-            ),
-          ),
-          title: Text('Todos for: ${user['name']}'),
-        ),
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Id: ${user['id']}'),
-                    Text('Name: ${user['name']}'),
-                    Text('Email: ${user['email']}'),
-                    Text('Power: ${user['power']}'),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: () async => store.getEvents(Get.parameters['user']),
-                  child: ListView.builder(
-                    itemCount: store.events.length,
-                    itemBuilder: (context, index) {
-                      var event = store.events[index];
-                      return GestureDetector(
-                        onTap: () async {},
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0,
-                            vertical: 10.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(0, 0, kDefaultPadding, 0),
-                                      child: event['lat'] > 0 ? const Icon(
-                                        Icons.check_box,
-                                        color: Colors.lightGreen,
-                                      ) : const Icon(
-                                        Icons.check_box_outline_blank,
-                                        color: Colors.redAccent,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        '${event['body']['content']}',
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      drawer: const MyDrawer(),
+      appBar: AppBar(
+        leading: Hero(
+          tag: 'logo',
+          child: Padding(
+            child: SvgPicture.asset('assets/images/witch-cat.svg'),
+            padding: const EdgeInsets.all(kDefaultPadding / 2),
           ),
         ),
-        bottomNavigationBar: const MyBottomNavigationBar(),
+        title: Text('Todos for: ${user.name}'),
       ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(kDefaultPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Id: ${user.id}'),
+                  Text('Name: ${user.name}'),
+                  Text('Email: ${user.email}'),
+                  Text('Power: ${user.power}'),
+                ],
+              ),
+            ),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async => store.getEvents(Get.parameters['user']),
+                child: Obx(() => ListView.builder(
+                  itemCount: store.events.length,
+                  itemBuilder: (context, index) {
+                    var event = store.events[index];
+                    return GestureDetector(
+                      onTap: () async {},
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0,
+                          vertical: 10.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0, 0, kDefaultPadding, 0),
+                                    child: event.lat > 0 ? const Icon(
+                                      Icons.check_box,
+                                      color: Colors.lightGreen,
+                                    ) : const Icon(
+                                      Icons.check_box_outline_blank,
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      event.body.content,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                )),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: const MyBottomNavigationBar(),
     );
   }
 }

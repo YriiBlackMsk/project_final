@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../screens/events_screen.dart';
-import '../screens/users_screen.dart';
-
 class MyBottomNavigationBar extends StatefulWidget {
   const MyBottomNavigationBar({
     Key? key,
@@ -17,10 +14,12 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = 0;
-      Get.back();
-    });
+    if (index == 0) {
+      setState(() {
+        _selectedIndex = 0;
+        Get.back();
+      });
+    }
   }
 
   @override

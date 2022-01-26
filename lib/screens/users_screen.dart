@@ -50,7 +50,7 @@ class _UsersScreenState extends State<UsersScreen> {
                 var user = store.users[index];
                 return GestureDetector(
                   onTap: () async {
-                    Get.toNamed('/events/${user['id']}');
+                    Get.toNamed('/events/${user.id}');
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -67,18 +67,18 @@ class _UsersScreenState extends State<UsersScreen> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     0, 0, kDefaultPadding, 0),
-                                child: Text('${user['id']}'),
+                                child: Text('${user.id}'),
                               ),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '${user['name']}',
+                                      user.name,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
-                                      '${user['email']}',
+                                      user.email,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     ),
